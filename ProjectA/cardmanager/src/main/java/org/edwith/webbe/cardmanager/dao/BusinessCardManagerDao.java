@@ -101,6 +101,6 @@ public class BusinessCardManagerDao {
         } finally {
             close(conn, pstmt, rs);
         }
-        return null;
+        return businessCard;
     }
 }
