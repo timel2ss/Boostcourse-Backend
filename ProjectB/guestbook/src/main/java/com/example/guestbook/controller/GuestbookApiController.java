@@ -33,7 +33,7 @@ public class GuestbookApiController {
     }
 
     @PostMapping("api/guestbook/write")
-    public Guestbook write(GuestbookDto.Create guestbookDto, HttpServletRequest httpServletRequest) {
+    public Guestbook write(@RequestBody GuestbookDto.Create guestbookDto, HttpServletRequest httpServletRequest) {
         Guestbook guestbook = new Guestbook();
         guestbook.setName(guestbookDto.getName());
         guestbook.setContent(guestbookDto.getContent());
