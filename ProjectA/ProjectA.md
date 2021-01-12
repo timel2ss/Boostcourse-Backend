@@ -73,3 +73,6 @@ public List<BusinessCard> searchBusinessCard(String keyword){
         return cards;
     }
 ```
+
+### Execution
+![image](https://user-images.githubusercontent.com/62116902/104103185-17c8f880-52e4-11eb-9656-08cb22fa92b6.png)
