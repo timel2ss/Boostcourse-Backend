@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>방명록</title>
+    <style>
+        .guestbook {
+            padding: 5px 0px 5px 5px;
+            margin-bottom: 5px;
+            border-bottom: 1px solid #efefef;
+            font-size: 12px;
+        }
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            padding-right: 10px;
+            float: left;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>방명록</h1>
+    <br>
+    <h3 th:text="'방명록 전체 수: ' + ${count}">방명록 전체 수: 0</h3>
+    <div class="guestbooks"></div>
+    <tr th:each="guestbook : ${list}">
+        <div class="guestbook">
+            <td th:text="${guestbook.id}"></td>
+            <td th:text="${guestbook.name}"></td>
+            <td th:text="${guestbook.content}"></td>
+            <td th:text="${guestbook.regdate}"></td>
+            <td>
+                <form method="post" action="/guestbook/delete" style="display: inline">
+                    <input type="hidden" name="id" th:value="${guestbook.id}">
+                    <input type="submit" value="X">
+                </form>
+            </td>
+        </div>
+    </tr>
+    </div>
+
+    <br>
+    <ul th:each="page : ${pages}">
+        <li>
+            <a href="list.html" th:href="@{/guestbook/list(start=${page})}" th:text="${(page+5) / 5}"></a>
+        </li>
+    </ul>
+    <br><br>
+
+    <form method="post" action="/guestbook/write">
+        이름 : <input type="text" name="name"><br>
+        내용 :
+        <textarea name="content" cols="50" rows="5"></textarea><br>
+        <input type="submit" value="확인">
+    </form>
+</body>
+</html>
