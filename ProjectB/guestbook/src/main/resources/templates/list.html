@@ -30,7 +30,7 @@
     <div class="guestbooks"></div>
     <tr th:each="guestbook : ${list}">
         <div class="guestbook">
-            <td th:text="${guestbook.id}"></td>
+            <td th:text="'[' + ${guestbook.id} + ']'"></td>
             <td th:text="${guestbook.name}"></td>
             <td th:text="${guestbook.content}"></td>
             <td th:text="${guestbook.regdate}"></td>

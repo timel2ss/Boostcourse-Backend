@@ -41,7 +41,8 @@ class GuestbookServiceTest {
         Guestbook guestbook = new Guestbook();
         guestbook.setName("name");
         guestbook.setContent("content");
-        long saveId = guestbookService.write(guestbook, "127.0.0.1");;
+        Guestbook saveOne = guestbookService.write(guestbook, "127.0.0.1");
+        long saveId = saveOne.getId();
         int beforeCount = guestbookService.getCount();
 
         // when

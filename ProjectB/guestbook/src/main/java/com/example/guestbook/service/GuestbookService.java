@@ -24,15 +24,15 @@ public class GuestbookService {
     }
 
     @Transactional(readOnly = false)
-    public long write(Guestbook guestbook, String ip) {
-        guestbookRepository.write(guestbook);
+    public Guestbook write(Guestbook guestbook, String ip) {
+        Guestbook writeOne = guestbookRepository.write(guestbook);
 
         Log log = new Log();
         log.setIp(ip);
         log.setMethod("INSERT");
         log.setRegdate(new Date());
         logRepository.insert(log);
-        return guestbook.getId();
+        return writeOne;
     }
 
     @Transactional(readOnly = false)
