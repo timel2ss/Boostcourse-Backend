@@ -108,7 +108,7 @@ public List<Guestbook> getList(int start) {
 ```
 
 #### 방명록 API
-// 문서 추가 예정
+https://documenter.getpostman.com/view/8107109/TVzUCFvo
 
 ### Execution
 #### 방명록 조회 목록
