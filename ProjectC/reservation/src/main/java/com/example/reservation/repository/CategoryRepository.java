@@ -21,20 +21,7 @@ public class CategoryRepository {
     }
 
     public Long getCategoriesSize() {
-        Long result = namedParameterJdbcTemplate.queryForObject("select count(*) from category", Collections.emptyMap(), Long.class);
-        if(result != null) {
-            return result;
-        }
-        return 0L;
-    }
-
-    public Long getCategoryCountById(Long id) {
-        Map<String, ?> parameter = Collections.singletonMap("id", id);
-        Long result = namedParameterJdbcTemplate.queryForObject("select count(*) from category c, product p where c.id = p.category_id and c.id = :id", parameter, Long.class);
-        if(result != null) {
-            return result;
-        }
-        return 0L;
+        return namedParameterJdbcTemplate.queryForObject("select count(*) from category", Collections.emptyMap(), Long.class);
     }
 
     public List<Category> findAllCategories() {

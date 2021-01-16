@@ -23,6 +23,16 @@ public class DisplayInfoRepository {
         return namedParameterJdbcTemplate.query("select * from display_info where product_id = :product_id", parameter, displayInfoRowMapper());
     }
 
+    public DisplayInfo findById(long id) {
+        Map<String, ?> parameter = Collections.singletonMap("id", id);
+        return namedParameterJdbcTemplate.queryForObject("select * from display_info where id = :id", parameter, displayInfoRowMapper());
+    }
+
+    public long getDisplayInfoTotalCount() {
+        return namedParameterJdbcTemplate.queryForObject("select count(*) from product p, display_info d where p.id = d.product_id", Collections.emptyMap(), Long.class);
+    }
+
+
     public long getDisplayInfoCountByCategoryId(long categoryId) {
         Map<String, ?> parameter = Collections.singletonMap("category_id", categoryId);
         return namedParameterJdbcTemplate.queryForObject("select count(*) from product p, display_info d where p.id = d.product_id and p.category_id = :category_id", parameter, Long.class);

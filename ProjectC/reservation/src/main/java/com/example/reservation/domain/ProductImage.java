@@ -7,8 +7,8 @@ import lombok.Setter;
 @Getter @Setter
 @NoArgsConstructor
 public class ProductImage {
-    private int id;
-    private int product_id;
+    private long id;
+    private long product_id;
     private String type;
-    private int file_id;
+    private long file_id;
 }

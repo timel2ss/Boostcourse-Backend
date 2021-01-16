@@ -7,6 +7,6 @@ import lombok.Setter;
 @Getter @Setter
 @NoArgsConstructor
 public class Promotion {
-    private int id;
-    private int product_id;
+    private long id;
+    private long product_id;
 }

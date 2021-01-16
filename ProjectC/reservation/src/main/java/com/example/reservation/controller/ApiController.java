@@ -1,8 +1,13 @@
 package com.example.reservation.controller;
 
+import com.example.reservation.domain.ProductImage;
 import com.example.reservation.dto.DisplayInfoDto;
+import com.example.reservation.dto.DisplayInfoImageDto;
+import com.example.reservation.dto.ProductImageDto;
 import com.example.reservation.service.CategoryService;
 import com.example.reservation.service.DisplayInfoService;
+import com.example.reservation.service.ProductService;
+import com.example.reservation.service.PromotionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,11 +20,15 @@ import java.util.Map;
 public class ApiController {
     private final CategoryService categoryService;
     private final DisplayInfoService displayInfoService;
+    private final PromotionService promotionService;
+    private final ProductService productService;
 
     @Autowired
-    public ApiController(CategoryService categoryService, DisplayInfoService displayInfoService) {
+    public ApiController(CategoryService categoryService, DisplayInfoService displayInfoService, PromotionService promotionService, ProductService productService) {
         this.categoryService = categoryService;
         this.displayInfoService = displayInfoService;
+        this.promotionService = promotionService;
+        this.productService = productService;
     }
 
     @GetMapping("/categories")
@@ -32,7 +41,7 @@ public class ApiController {
 
     @GetMapping("/displayinfos")
     public Map<String, Object> getDisplayInfos(@RequestParam(name = "categoryId", required = false, defaultValue = "0") long categoryId,
-                                               @RequestParam(name = "start", required = false) int start,
+                                               @RequestParam(name = "start", required = false) int start, // TODO paging
                                                @RequestParam(name = "productId", required = false, defaultValue = "0") long productId) {
         Map<String, Object> map = new HashMap<>();
 
@@ -40,16 +49,18 @@ public class ApiController {
 
         }
 
-        long totalCount = 0;
 
+        long totalCount;
+        List<DisplayInfoDto.Response> displayInfos;
         if(categoryId == 0) {
-//            totalCount = //total
+            totalCount = displayInfoService.getDisplayInfoTotalCount();
+            displayInfos = displayInfoService.findAllProductInfos(start);
         }
         else {
-            totalCount = displayInfoService.getTotalSize(categoryId);
+            totalCount = displayInfoService.getDisplayInfoCountByCatgoryId(categoryId);
+            displayInfos = displayInfoService.findAllProductInfosByCategoryId(categoryId, start);
         }
 
-        List<DisplayInfoDto.Response> displayInfos = displayInfoService.findAllProductInfosByCategoryId(categoryId, start);
         map.put("totalCount", totalCount);
         map.put("productCount", displayInfos.size());
         map.put("products", displayInfos);
@@ -58,12 +69,19 @@ public class ApiController {
 
     @GetMapping("/displayInfos/{displayId}")
     public Map<String, Object> getDisplayInfoByDisplayId(@PathVariable(name = "displayId") long displayId) {
+        DisplayInfoDto.Response product = displayInfoService.findByDisplayId(displayId);
+        ProductImageDto.Response productImage = productService.getImageByDisplayId(displayId);
+        DisplayInfoImageDto.Response displayInfoImage = displayInfoService.getDisplayInfoImageByDisplayId(displayId);
+        // TODO avgScore, productPrices
         return null;
     }
 
     @GetMapping("/promotions")
     public Map<String, Object> getPromotionInfoList() {
-        return null;
+        Map<String, Object> map = new HashMap<>();
+        map.put("size", promotionService.getNumberOfPromotions());
+        map.put("items", promotionService.findAll());
+        return map;
     }
 
 

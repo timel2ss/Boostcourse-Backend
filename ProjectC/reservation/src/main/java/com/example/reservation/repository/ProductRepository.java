@@ -20,6 +20,20 @@ public class ProductRepository {
         namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
+    public List<Product> findAll() {
+        return namedParameterJdbcTemplate.query("select * from product", Collections.emptyMap(), productRowMapper());
+    }
+
+    public Product findById(long id) {
+        Map<String, ?> parameter = Collections.singletonMap("id", id);
+        return namedParameterJdbcTemplate.queryForObject("select * from product where id = :id", parameter, productRowMapper());
+    }
+
+    public Product findByDisplayId(long id) {
+        Map<String, ?> parameter = Collections.singletonMap("id", id);
+        return namedParameterJdbcTemplate.queryForObject("select p.id, p.category_id, p.description, p.content, p.event, p.create_date, p.modify_date from product p , display_info d where p.id = d.product_id and d.id = :id", parameter, productRowMapper());
+    }
+
     public List<Product> findByCategoryId(long categoryId) {
         Map<String, ?> parameter = Collections.singletonMap("category_id", categoryId);
         return namedParameterJdbcTemplate.query("select * from product where category_id = :category_id", parameter, productRowMapper());
