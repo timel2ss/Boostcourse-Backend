@@ -10,5 +10,6 @@ Boostcourse Backend Projects
 [ProjectB.md](https://github.com/timel2ss/Boostcourse-Backend/blob/master/ProjectB/ProjectB.md)
 
 ### ProjectC
+[ProjectC.md](https://github.com/timel2ss/Boostcourse-Backend/blob/master/ProjectC/ProjectC.md)
 
 ### ProjectD
