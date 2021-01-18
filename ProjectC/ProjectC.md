@@ -47,10 +47,10 @@ GET (카테고리 목록 구하기): /api/categories
 }
 ```
 
-items : 카테고리 목록
-id : 카테고리 id
-name : 카테고리 이름
-count : 카테고리에 포함된 전시 상품(display_info)의 수. 주의해야할 것은 하나의 상품이 여러 곳에 전시될 수 있다.
+- items : 카테고리 목록
+- id : 카테고리 id
+- name : 카테고리 이름
+- count : 카테고리에 포함된 전시 상품(display_info)의 수. 주의해야할 것은 하나의 상품이 여러 곳에 전시될 수 있다.
 
 ### 상품 목록 구하기
 GET (상품 목록 구하기): /api/displayinfos
@@ -143,9 +143,9 @@ GET (상품 목록 구하기): /api/displayinfos
 }
 ```
 
-totalCount : 해당 카테고리의 전시 상품 수
-productCount : 읽어온 전시 상품 수
-products : 전시 상품 정보
+- totalCount : 해당 카테고리의 전시 상품 수
+- productCount : 읽어온 전시 상품 수
+- products : 전시 상품 정보
 
 ### 프로모션 정보 구하기
 GET (프로모션 목록 구하기): /api/promotions
@@ -247,9 +247,9 @@ GET (프로모션 목록 구하기): /api/promotions
 }
 ```
 
-size : 프로모션 정보의 수
-items : 프로모션 상품 정보
-fileId : file_info 테이블의 id (product_image의 타입중 ma인 경우만)
+- size : 프로모션 정보의 수
+- items : 프로모션 상품 정보
+- fileId : file_info 테이블의 id (product_image의 타입중 ma인 경우만)
 
 ### 전시 정보 구하기
 GET (카테고리 목록 구하기): /api/displayinfos/{displayId}
@@ -336,11 +336,11 @@ GET (카테고리 목록 구하기): /api/displayinfos/{displayId}
 }}
 ```
 
-product : 상품정보
-productImages : 상품 이미지 정보들
-displayInfoImages : 전시 이미지 정보들
-avgScore : 댓글 점수의 평균 (int값)
-productPrices : 상품 가격 정보들
+- product : 상품정보
+- productImages : 상품 이미지 정보들
+- displayInfoImages : 전시 이미지 정보들
+- avgScore : 댓글 점수의 평균 (int값)
+- productPrices : 상품 가격 정보들
 
 ### 댓글 목록 구하기
 GET (댓글 목록 구하기): /api/displayinfos
@@ -413,6 +413,6 @@ GET (댓글 목록 구하기): /api/displayinfos
 } 
 ```
 
-totalCount : 해당 상품의 댓글 전체 수
-commentCount : 읽어온 댓글 수
-reservationUserComments : 댓글 정보
+- totalCount : 해당 상품의 댓글 전체 수
+- commentCount : 읽어온 댓글 수
+- reservationUserComments : 댓글 정보
