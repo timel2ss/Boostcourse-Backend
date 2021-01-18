@@ -54,7 +54,9 @@ count : 카테고리에 포함된 전시 상품(display_info)의 수. 주의해�
 
 ### 상품 목록 구하기
 GET (상품 목록 구하기): /api/displayinfos
+
 ![](https://cphinf.pstatic.net/mooc/20200527_190/1590558548299zj8qd_PNG/mceclip0.png)
+
 <응답결과>
 ```
 {
@@ -343,7 +345,9 @@ productPrices : 상품 가격 정보들
 ### 댓글 목록 구하기
 GET (댓글 목록 구하기): /api/displayinfos
 상품의 댓글을 최대 5건씩 읽어온다. 댓글은 상품별로 저장됩니다.
+
 ![](https://cphinf.pstatic.net/mooc/20200527_162/1590559305737Yh1Jq_PNG/mceclip1.png)
+
 <응답결과>
 ```
 {
