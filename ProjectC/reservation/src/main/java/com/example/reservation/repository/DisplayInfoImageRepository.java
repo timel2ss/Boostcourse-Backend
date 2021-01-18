@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -20,11 +19,11 @@ public class DisplayInfoImageRepository {
 
     public Long findFileIdByDisplayInfoId(long displayInfoId) {
         Map<String, ?> parameter = Collections.singletonMap("display_info_id", displayInfoId);
-        return namedParameterJdbcTemplate.queryForObject("select file_id from display_info_image where display_info_id = :displa_info_id", parameter, Long.class);
+        return namedParameterJdbcTemplate.queryForObject("select file_id from display_info_image where display_info_id = :display_info_id", parameter, Long.class);
     }
 
     public DisplayInfoImage findByDisplayId(long displayId) {
-        Map<String, ?> parameter = Collections.singletonMap("display_Id", displayId);
+        Map<String, ?> parameter = Collections.singletonMap("display_id", displayId);
         return namedParameterJdbcTemplate.queryForObject("select * from display_info_image where display_info_id = :display_id", parameter, displayInfoImageRowMapper());
     }
 

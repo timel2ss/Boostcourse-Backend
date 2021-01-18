@@ -7,8 +7,8 @@ import lombok.Setter;
 @Getter @Setter
 @NoArgsConstructor
 public class ReservationUserCommentImage {
-    private int id;
-    private int reservation_info_id;
-    private int reservation_user_comment_id;
-    private int file_id;
+    private long id;
+    private long reservation_info_id;
+    private long reservation_user_comment_id;
+    private long file_id;
 }

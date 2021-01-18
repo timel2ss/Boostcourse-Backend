@@ -1,13 +1,11 @@
 package com.example.reservation.controller;
 
-import com.example.reservation.domain.ProductImage;
+import com.example.reservation.domain.ProductPrice;
 import com.example.reservation.dto.DisplayInfoDto;
 import com.example.reservation.dto.DisplayInfoImageDto;
 import com.example.reservation.dto.ProductImageDto;
-import com.example.reservation.service.CategoryService;
-import com.example.reservation.service.DisplayInfoService;
-import com.example.reservation.service.ProductService;
-import com.example.reservation.service.PromotionService;
+import com.example.reservation.dto.ReservationUserCommentDto;
+import com.example.reservation.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,13 +20,15 @@ public class ApiController {
     private final DisplayInfoService displayInfoService;
     private final PromotionService promotionService;
     private final ProductService productService;
+    private final ReservationService reservationService;
 
     @Autowired
-    public ApiController(CategoryService categoryService, DisplayInfoService displayInfoService, PromotionService promotionService, ProductService productService) {
+    public ApiController(CategoryService categoryService, DisplayInfoService displayInfoService, PromotionService promotionService, ProductService productService, ReservationService reservationService) {
         this.categoryService = categoryService;
         this.displayInfoService = displayInfoService;
         this.promotionService = promotionService;
         this.productService = productService;
+        this.reservationService = reservationService;
     }
 
     @GetMapping("/categories")
@@ -41,12 +41,19 @@ public class ApiController {
 
     @GetMapping("/displayinfos")
     public Map<String, Object> getDisplayInfos(@RequestParam(name = "categoryId", required = false, defaultValue = "0") long categoryId,
-                                               @RequestParam(name = "start", required = false) int start, // TODO paging
+                                               @RequestParam(name = "start", required = false, defaultValue = "0") int start,
                                                @RequestParam(name = "productId", required = false, defaultValue = "0") long productId) {
         Map<String, Object> map = new HashMap<>();
 
         if(productId != 0) {
+            int totalCount = reservationService.getTotalCount(productId);
+            List<ReservationUserCommentDto.Response> comments = reservationService.getCommentsByProductId(productId, start);
+            int commentCount = comments.size();
 
+            map.put("totalCount", totalCount);
+            map.put("commentCount", commentCount);
+            map.put("reservationUserComments", comments);
+            return map;
         }
 
 
@@ -57,7 +64,7 @@ public class ApiController {
             displayInfos = displayInfoService.findAllProductInfos(start);
         }
         else {
-            totalCount = displayInfoService.getDisplayInfoCountByCatgoryId(categoryId);
+            totalCount = displayInfoService.getDisplayInfoCountByCategoryId(categoryId);
             displayInfos = displayInfoService.findAllProductInfosByCategoryId(categoryId, start);
         }
 
@@ -67,13 +74,21 @@ public class ApiController {
         return map;
     }
 
-    @GetMapping("/displayInfos/{displayId}")
+    @GetMapping("/displayinfos/{displayId}")
     public Map<String, Object> getDisplayInfoByDisplayId(@PathVariable(name = "displayId") long displayId) {
         DisplayInfoDto.Response product = displayInfoService.findByDisplayId(displayId);
-        ProductImageDto.Response productImage = productService.getImageByDisplayId(displayId);
+        List<ProductImageDto.Response> productImages = productService.getImageByDisplayId(displayId);
         DisplayInfoImageDto.Response displayInfoImage = displayInfoService.getDisplayInfoImageByDisplayId(displayId);
-        // TODO avgScore, productPrices
-        return null;
+        int avgScore = reservationService.getAvgScoreByProductId(product.getId());
+        List<ProductPrice> priceInfos = productService.getPriceInfoByProductId(product.getId());
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("product", product);
+        map.put("productImages", productImages);
+        map.put("displayInfoImages", displayInfoImage);
+        map.put("avgScore", avgScore);
+        map.put("productPrices", priceInfos);
+        return map;
     }
 
     @GetMapping("/promotions")

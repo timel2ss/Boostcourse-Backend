@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,8 +21,9 @@ public class ProductRepository {
         namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
-    public List<Product> findAll() {
-        return namedParameterJdbcTemplate.query("select * from product", Collections.emptyMap(), productRowMapper());
+    public List<Product> findAll(int start) {
+        Map<String, Integer> parameter = Collections.singletonMap("start", start);
+        return namedParameterJdbcTemplate.query("select * from product where id >= :start", parameter, productRowMapper());
     }
 
     public Product findById(long id) {

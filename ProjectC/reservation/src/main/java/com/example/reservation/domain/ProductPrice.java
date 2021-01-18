@@ -9,11 +9,11 @@ import java.util.Date;
 @Getter @Setter
 @NoArgsConstructor
 public class ProductPrice {
-    private int id;
-    private int product_id;
+    private long id;
+    private long product_id;
     private String price_type_name;
-    private int price;
-    private int discount_rate;
+    private long price;
+    private double discount_rate;
     private Date create_date;
     private Date modify_date;
 }

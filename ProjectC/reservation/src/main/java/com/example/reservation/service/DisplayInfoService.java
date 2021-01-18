@@ -6,11 +6,13 @@ import com.example.reservation.dto.DisplayInfoImageDto;
 import com.example.reservation.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedList;
 import java.util.List;
 
 @Service
+@Transactional
 public class DisplayInfoService {
     private final DisplayInfoRepository displayInfoRepository;
     private final DisplayInfoImageRepository displayInfoImageRepository;
@@ -43,7 +45,7 @@ public class DisplayInfoService {
     }
 
     public List<DisplayInfoDto.Response> findAllProductInfos(int start) {
-        List<Product> products = productRepository.findAll();
+        List<Product> products = productRepository.findAll(start);
         List<DisplayInfoDto.Response> result = new LinkedList<>();
         for(Product product : products) {
             List<DisplayInfo> displayInfos = displayInfoRepository.findByProductId(product.getId());
@@ -71,7 +73,7 @@ public class DisplayInfoService {
         return new DisplayInfoImageDto.Response(displayInfoImage.getId(), displayInfoImage.getDisplay_info_id(), displayInfoImage.getFile_id(), fileInfo.getFile_name(), fileInfo.getSave_file_name(), fileInfo.getContent_type(), fileInfo.isDelete_flag(), fileInfo.getCreate_date(), fileInfo.getModify_date());
     }
 
-    public long getDisplayInfoCountByCatgoryId(long categoryId) {
+    public long getDisplayInfoCountByCategoryId(long categoryId) {
         return displayInfoRepository.getDisplayInfoCountByCategoryId(categoryId);
     }
 
